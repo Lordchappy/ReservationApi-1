@@ -70,7 +70,7 @@ class Users:
         except Exception as err:
             return {"message" : err}
 
-    @router.post('/login',response_model=schemas.Token,status_code=status.HTTP_202_ACCEPTED)
+    @router.post('/login',response_model=schemas.Token,status_code=status.HTTP_200_OK)
     async def login(self, user_credentials: OAuth2PasswordRequestForm = Depends())-> schemas.Token:
         user = self.db.query(models.User).filter(models.User.email == user_credentials.username).first()
         print (user)

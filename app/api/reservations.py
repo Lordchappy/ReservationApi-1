@@ -29,7 +29,7 @@ class Reservations:
              raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Rental with id number {id} does not exist")
         return rental
 
-    @router.post("/room", response_model=schemas.Reservations_Output,status_code=status.HTTP_200_OK)
+    @router.get("/room/{room_number}", response_model=schemas.Reservations_Output,status_code=status.HTTP_200_OK)
     async def get_rentals_with_room_number(self,room_number:int) -> schemas.Reservations_Output:
         rental = self.db.query(models.Reservations).filter(models.Reservations.Room_number == room_number).first()
         if not rental:
@@ -61,13 +61,6 @@ class Reservations:
             except Exception as err:
                 return {"message" : err}
 
-    # @router.get("/rentals", response_model=List[schemas.Reservations_Output],status_code=status.HTTP_200_OK)
-    # async def get_users_reservations(self,current_user: int= Depends(Users.get_current_user))-> schemas.Reservations_Output:
-        
-    #     rental =  self.db.query(models.Reservations).filter(models.Reservations.owner_id == .first()
-    #     if not rental:
-    #          raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="not present")
-    #     return rental
     
     @router.delete("/{id}",status_code=status.HTTP_204_NO_CONTENT)
     async def delete_rentals(self,id:int,current_user: int= Depends(Users.get_current_user)):
