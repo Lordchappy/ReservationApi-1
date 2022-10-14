@@ -39,6 +39,24 @@ def test_get_one_rentals_not_exist_with_(client,test_rentals):
     assert res.status_code == 403
 
 
+# @pytest.mark.parametrize("name, booking_time, Room_number", [
+#     ("string",2022-10-12T21:21:54.960Z,32),
+#     ("string",2023-10-12T21:21:54.960Z,2),
+#     ("string",2023-10-12T21:21:54.960Z,22),
+# ])
+# def test_create_rentals(client, test_user,test_rentals,token):
+#     data = {"name": "name", "booking_time": "2022-10-12T21:21:54.960Z", "Room_number": 23,"owner_id":test_user['id']}
+#     # new_data = models.Reservations(**data)
+#     newer_data = list(data)
+#     res = client.post(
+#         "/reservations/reservations/new_reservations",headers={ 'Authorization': f'Bearer {token}' },json=data)
+
+#     created_rentals = schemas.Reservations(**res.json())
+#     assert res.status_code == 201
+#     assert created_rentals.Room_number == 23
+#     assert created_rentals.booking_time == "2022-10-12T21:21:54.960Z"
+#     assert created_rentals.name =="name"
+# #     # assert created_rentals.owner_id == test_user['id']
 
 def test_unauthorized_user_create_rentals(client, test_user, test_rentals):
     res = client.post(

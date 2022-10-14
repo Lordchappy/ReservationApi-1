@@ -2,6 +2,7 @@ import jwt
 from fastapi import HTTPException 
 from datetime import datetime, timedelta
 from ..config import settings
+from app.models import schemas
 
 class Auth():
 
@@ -19,11 +20,13 @@ class Auth():
             algorithm='HS256'
         )
 
-    def decode_token(self, token):
+    def decode_token(self, token:str):
         try:
             payload = jwt.decode(token, self.secret, algorithms=['HS256'])
             if (payload['scope'] == 'token'):
-                return payload['sub']   
+                return payload['sub'] 
+               
+                   
             raise HTTPException(status_code=401, detail='Scope for the token is invalid')
         except jwt.ExpiredSignatureError:
             raise HTTPException(status_code=401, detail='Token expired')
